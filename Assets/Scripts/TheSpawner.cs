@@ -9,7 +9,7 @@ public class TheSpawner : MonoBehaviour
     //public Camera cameraMain;
     public GameObject character;
     public GameObject menu;
-    public float secondBetweenSpawns = 0.1f;
+    public float secondBetweenSpawns = 1f;
     float nextSpawnTime;
     //Vector2 screenHalfSizeWorldUnits;
     public Vector2 spawnSizeMinMax;

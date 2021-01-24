@@ -557,7 +557,7 @@ Transform:
   - {fileID: 1200190049}
   - {fileID: 1619976686}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &166435328
 GameObject:
@@ -2460,8 +2460,8 @@ MonoBehaviour:
   fallingCoinPrefab: {fileID: 697259246866393330, guid: 87364b6a281bb2c4191ddf0a022ce375, type: 3}
   character: {fileID: 2025899448}
   menu: {fileID: 577127368}
-  secondBetweenSpawns: 1
-  spawnSizeMinMax: {x: 0.1, y: 0.4}
+  secondBetweenSpawns: 0.5
+  spawnSizeMinMax: {x: 0.1, y: 0.8}
 --- !u!4 &1186844566
 Transform:
   m_ObjectHideFlags: 0
@@ -2474,7 +2474,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1190430951
 PrefabInstance:

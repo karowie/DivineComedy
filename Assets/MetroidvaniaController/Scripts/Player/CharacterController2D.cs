@@ -6,6 +6,8 @@ using System.Collections.Generic;
 
 public class CharacterController2D : MonoBehaviour
 {
+	//public GameObject character;
+
 	[SerializeField] private float m_JumpForce = 400f;							// Amount of force added when the player jumps.
 	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;	// How much to smooth out the movement
 	[SerializeField] private bool m_AirControl = false;							// Whether or not a player can steer while jumping;
@@ -60,35 +62,86 @@ public class CharacterController2D : MonoBehaviour
     }
 
 	private void OnTriggerEnter2D(Collider2D collision)
-    {
+	{
 		if (collision.CompareTag("Collectable"))
-        {
+		{
 			string itemType = collision.gameObject.GetComponent<CollectableScript>().itemType;
-			
-			if(items.Count==0)
+
+			//collision.gameObject.GetComponent<AudioSource>().Play();
+
+			if (items.Count == 0)
 				items.Add(itemType);
-            else if(items.Contains(itemType))
+			else if (items.Contains(itemType))
 				items.Add(itemType);
-            else
+			else
 				SceneManager.LoadScene(3);
-			
+
 			collision.gameObject.SetActive(false);
 			Destroy(collision.gameObject);
 
-			if(items.Count==5)
+			if (items.Count == 5)
 				SceneManager.LoadScene(4);
-        }
+		}
 		else if (collision.CompareTag("Food"))
-        {
+		{
 			if (items.Count == 4)
 				SceneManager.LoadScene(4);
 			else
-            {
+			{
 				collision.gameObject.SetActive(false);
 				Destroy(collision.gameObject);
 				items.Add("Food");
-				transform.localScale = new Vector2(Vector2.one.x + 0.5f*items.Count, Vector2.one.y + 0.5f * items.Count);
+				transform.localScale = new Vector2(Vector2.one.x + 0.5f * items.Count, Vector2.one.y + 0.5f * items.Count);
 
+			}
+
+		}
+		else if (collision.CompareTag("Doors"))
+		{
+			Scene currentScene = SceneManager.GetActiveScene();
+
+			if (currentScene.name == "Hell-Level1")
+			{
+				SceneManager.LoadScene(3);
+			}
+			else if ((items.Count < 2) && (currentScene.name == "Hell-Level3"))
+			{
+				SceneManager.LoadScene(5);
+			}
+			else if (currentScene.name == "Hell-Level4")
+			{
+				SceneManager.LoadScene(6);
+			}
+			else if (currentScene.name == "Hell-Level6")
+			{
+				SceneManager.LoadScene(8);
+			}
+		}
+		if (collision.CompareTag("Coin"))
+		{
+			collision.gameObject.SetActive(false);
+			Destroy(collision.gameObject);
+			items.Add("Coin");
+
+			if (items.Count > 3)
+			{
+				SceneManager.LoadScene(5);
+			}
+
+
+		}
+		else if (collision.CompareTag("DoorsLevel"))
+        {
+			animator = GetComponent<Animator>();
+
+			if (collision.name.EndsWith("1"))
+            {
+				this.transform.position = new Vector3(this.transform.position.x+20, this.transform.position.y+10, this.transform.position.z);
+
+			}
+			else if (collision.name.EndsWith("2"))
+			{
+				print("drzwi 2");
 			}
 
 		}
@@ -109,12 +162,12 @@ public class CharacterController2D : MonoBehaviour
 	}
 
 
-	private void FixedUpdate()
-	{
-		bool wasGrounded = m_Grounded;
-		m_Grounded = false;
+    private void FixedUpdate()
+    {
+        bool wasGrounded = m_Grounded;
+        m_Grounded = false;
 
-        // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
+        //The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
         // This can be done using layers instead but Sample Assets will not overwrite your project settings.
         Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
         for (int i = 0; i < colliders.Length; i++)
@@ -134,87 +187,88 @@ public class CharacterController2D : MonoBehaviour
 
         m_IsWall = false;
 
-		if (!m_Grounded)
-		{
-			OnFallEvent.Invoke();
-			Collider2D[] collidersWall = Physics2D.OverlapCircleAll(m_WallCheck.position, k_GroundedRadius, m_WhatIsGround);
-			for (int i = 0; i < collidersWall.Length; i++)
-			{
-				if (collidersWall[i].gameObject != null)
-				{
-					isDashing = false;
-					m_IsWall = true;
-				}
-			}
-			prevVelocityX = m_Rigidbody2D.velocity.x;
-		}
+        if (!m_Grounded)
+        {
+            OnFallEvent.Invoke();
+            Collider2D[] collidersWall = Physics2D.OverlapCircleAll(m_WallCheck.position, k_GroundedRadius, m_WhatIsGround);
+            for (int i = 0; i < collidersWall.Length; i++)
+            {
+                if (collidersWall[i].gameObject != null)
+                {
+                    isDashing = false;
+                    m_IsWall = true;
+                }
+            }
+            prevVelocityX = m_Rigidbody2D.velocity.x;
+        }
 
-		if (limitVelOnWallJump)
-		{
-			if (m_Rigidbody2D.velocity.y < -0.5f)
-				limitVelOnWallJump = false;
-			jumpWallDistX = (jumpWallStartX - transform.position.x) * transform.localScale.x;
-			if (jumpWallDistX < -0.5f && jumpWallDistX > -1f) 
-			{
-				canMove = true;
-			}
-			else if (jumpWallDistX < -1f && jumpWallDistX >= -2f) 
-			{
-				canMove = true;
-				m_Rigidbody2D.velocity = new Vector2(10f * transform.localScale.x, m_Rigidbody2D.velocity.y);
-			}
-			else if (jumpWallDistX < -2f) 
-			{
-				limitVelOnWallJump = false;
-				m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y);
-			}
-			else if (jumpWallDistX > 0) 
-			{
-				limitVelOnWallJump = false;
-				m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y);
-			}
-		}
-	}
+        if (limitVelOnWallJump)
+        {
+            if (m_Rigidbody2D.velocity.y < -0.5f)
+                limitVelOnWallJump = false;
+            jumpWallDistX = (jumpWallStartX - transform.position.x) * transform.localScale.x;
+            if (jumpWallDistX < -0.5f && jumpWallDistX > -1f)
+            {
+                canMove = true;
+            }
+            else if (jumpWallDistX < -1f && jumpWallDistX >= -2f)
+            {
+                canMove = true;
+                m_Rigidbody2D.velocity = new Vector2(10f * transform.localScale.x, m_Rigidbody2D.velocity.y);
+            }
+            else if (jumpWallDistX < -2f)
+            {
+                limitVelOnWallJump = false;
+                m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y);
+            }
+            else if (jumpWallDistX > 0)
+            {
+                limitVelOnWallJump = false;
+                m_Rigidbody2D.velocity = new Vector2(0, m_Rigidbody2D.velocity.y);
+            }
+        }
+    }
 
-
-	public void Move(float move, bool jump, bool dash)
+	//public void Move(float move, bool jump, bool dash)
+	public void Move(float move, bool jump)
 	{
-		if (canMove) {
-			if (dash && canDash && !isWallSliding)
-			{
-				//m_Rigidbody2D.AddForce(new Vector2(transform.localScale.x * m_DashForce, 0f));
-				StartCoroutine(DashCooldown());
-			}
-			// If crouching, check to see if the character can stand up
-			if (isDashing)
-			{
-				m_Rigidbody2D.velocity = new Vector2(transform.localScale.x * m_DashForce, 0);
-			}
-			//only control the player if grounded or airControl is turned on
-			else if (m_Grounded || m_AirControl)
-			{
-				if (m_Rigidbody2D.velocity.y < -limitFallSpeed)
-					m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, -limitFallSpeed);
-				// Move the character by finding the target velocity
-				Vector3 targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
-				// And then smoothing it out and applying it to the character
-				m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref velocity, m_MovementSmoothing);
+		//if (canMove) {
+            //if (dash && canDash && !isWallSliding)
+            //{
+            //	//m_Rigidbody2D.AddForce(new Vector2(transform.localScale.x * m_DashForce, 0f));
+            //	StartCoroutine(DashCooldown());
+            //}
+            // If crouching, check to see if the character can stand up
+            //if (isDashing)
+            //{
+            //	m_Rigidbody2D.velocity = new Vector2(transform.localScale.x * m_DashForce, 0);
+            //}
+            //only control the player if grounded or airControl is turned on
+            //else if (m_Grounded || m_AirControl)
+            if (m_Grounded || m_AirControl)
+            {
+                if (m_Rigidbody2D.velocity.y < -limitFallSpeed)
+                    m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, -limitFallSpeed);
+                // Move the character by finding the target velocity
+                Vector3 targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
+                // And then smoothing it out and applying it to the character
+                m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref velocity, m_MovementSmoothing);
 
-				// If the input is moving the player right and the player is facing left...
-				if (move > 0 && !m_FacingRight && !isWallSliding)
-				{
-					// ... flip the player.
-					Flip();
-				}
-				// Otherwise if the input is moving the player left and the player is facing right...
-				else if (move < 0 && m_FacingRight && !isWallSliding)
-				{
-					// ... flip the player.
-					Flip();
-				}
-			}
-			// If the player should jump...
-			if (m_Grounded && jump)
+                // If the input is moving the player right and the player is facing left...
+                if (move > 0 && !m_FacingRight && !isWallSliding)
+                {
+                    // ... flip the player.
+                    Flip();
+                }
+                // Otherwise if the input is moving the player left and the player is facing right...
+                else if (move < 0 && m_FacingRight && !isWallSliding)
+                {
+                    // ... flip the player.
+                    Flip();
+                }
+            }
+            // If the player should jump...
+            if (m_Grounded && jump)
 			{
 				// Add a vertical force to the player.
 				animator.SetBool("IsJumping", true);
@@ -274,15 +328,15 @@ public class CharacterController2D : MonoBehaviour
 					m_WallCheck.localPosition = new Vector3(Mathf.Abs(m_WallCheck.localPosition.x), m_WallCheck.localPosition.y, 0);
 					canMove = false;
 				}
-				else if (dash && canDash)
-				{
-					isWallSliding = false;
-					animator.SetBool("IsWallSliding", false);
-					oldWallSlidding = false;
-					m_WallCheck.localPosition = new Vector3(Mathf.Abs(m_WallCheck.localPosition.x), m_WallCheck.localPosition.y, 0);
-					canDoubleJump = true;
-					StartCoroutine(DashCooldown());
-				}
+				//else if (dash && canDash)
+				//{
+				//	isWallSliding = false;
+				//	animator.SetBool("IsWallSliding", false);
+				//	oldWallSlidding = false;
+				//	m_WallCheck.localPosition = new Vector3(Mathf.Abs(m_WallCheck.localPosition.x), m_WallCheck.localPosition.y, 0);
+				//	canDoubleJump = true;
+				//	StartCoroutine(DashCooldown());
+				//}
 			}
 			else if (isWallSliding && !m_IsWall && canCheck) 
 			{
@@ -292,7 +346,7 @@ public class CharacterController2D : MonoBehaviour
 				m_WallCheck.localPosition = new Vector3(Mathf.Abs(m_WallCheck.localPosition.x), m_WallCheck.localPosition.y, 0);
 				canDoubleJump = true;
 			}
-		}
+		//}
 	}
 
 
