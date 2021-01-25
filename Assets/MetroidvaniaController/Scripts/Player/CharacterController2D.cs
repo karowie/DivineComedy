@@ -23,8 +23,8 @@ public class CharacterController2D : MonoBehaviour
 	private float limitFallSpeed = 25f; // Limit fall speed
 
 	public bool canDoubleJump = true; //If player can double jump
-	[SerializeField] private float m_DashForce = 25f;
-	private bool canDash = true;
+	//[SerializeField] private float m_DashForce = 25f;
+	//private bool canDash = true;
 	private bool isDashing = false; //If player is dashing
 	private bool m_IsWall = false; //If there is a wall in front of the player
 	private bool isWallSliding = false; //If player is sliding in a wall
@@ -34,7 +34,7 @@ public class CharacterController2D : MonoBehaviour
 
 	public float life = 10f; //Life of the player
 	public bool invincible = false; //If player can die
-	private bool canMove = true; //If player can move
+	//private bool canMove = true; //If player can move
 
 	private Animator animator;
 	public ParticleSystem particleJumpUp; //Trail particles
@@ -66,8 +66,6 @@ public class CharacterController2D : MonoBehaviour
 		if (collision.CompareTag("Collectable"))
 		{
 			string itemType = collision.gameObject.GetComponent<CollectableScript>().itemType;
-
-			//collision.gameObject.GetComponent<AudioSource>().Play();
 
 			if (items.Count == 0)
 				items.Add(itemType);
@@ -119,6 +117,7 @@ public class CharacterController2D : MonoBehaviour
 		}
 		if (collision.CompareTag("Coin"))
 		{
+			//collision.gameObject.GetComponent<AudioSource>().Play();
 			collision.gameObject.SetActive(false);
 			Destroy(collision.gameObject);
 			items.Add("Coin");
@@ -207,13 +206,14 @@ public class CharacterController2D : MonoBehaviour
             if (m_Rigidbody2D.velocity.y < -0.5f)
                 limitVelOnWallJump = false;
             jumpWallDistX = (jumpWallStartX - transform.position.x) * transform.localScale.x;
-            if (jumpWallDistX < -0.5f && jumpWallDistX > -1f)
+            //if (jumpWallDistX < -0.5f && jumpWallDistX > -1f)
+            //{
+            //    canMove = true;
+            //}
+            //else if (jumpWallDistX < -1f && jumpWallDistX >= -2f)
+			if (jumpWallDistX < -1f && jumpWallDistX >= -2f)
             {
-                canMove = true;
-            }
-            else if (jumpWallDistX < -1f && jumpWallDistX >= -2f)
-            {
-                canMove = true;
+                //canMove = true;
                 m_Rigidbody2D.velocity = new Vector2(10f * transform.localScale.x, m_Rigidbody2D.velocity.y);
             }
             else if (jumpWallDistX < -2f)
@@ -326,7 +326,7 @@ public class CharacterController2D : MonoBehaviour
 					animator.SetBool("IsWallSliding", false);
 					oldWallSlidding = false;
 					m_WallCheck.localPosition = new Vector3(Mathf.Abs(m_WallCheck.localPosition.x), m_WallCheck.localPosition.y, 0);
-					canMove = false;
+					//canMove = false;
 				}
 				//else if (dash && canDash)
 				//{
@@ -386,18 +386,18 @@ public class CharacterController2D : MonoBehaviour
 	{
 		animator.SetBool("IsDashing", true);
 		isDashing = true;
-		canDash = false;
+		//canDash = false;
 		yield return new WaitForSeconds(0.1f);
 		isDashing = false;
 		yield return new WaitForSeconds(0.5f);
-		canDash = true;
+		//canDash = true;
 	}
 
 	IEnumerator Stun(float time) 
 	{
-		canMove = false;
+		//canMove = false;
 		yield return new WaitForSeconds(time);
-		canMove = true;
+		//canMove = true;
 	}
 	IEnumerator MakeInvincible(float time) 
 	{
@@ -407,9 +407,9 @@ public class CharacterController2D : MonoBehaviour
 	}
 	IEnumerator WaitToMove(float time)
 	{
-		canMove = false;
+		//canMove = false;
 		yield return new WaitForSeconds(time);
-		canMove = true;
+		//canMove = true;
 	}
 
 	IEnumerator WaitToCheck(float time)
@@ -432,7 +432,7 @@ public class CharacterController2D : MonoBehaviour
 	IEnumerator WaitToDead()
 	{
 		animator.SetBool("IsDead", true);
-		canMove = false;
+		//canMove = false;
 		invincible = true;
 		GetComponent<Attack>().enabled = false;
 		yield return new WaitForSeconds(0.4f);

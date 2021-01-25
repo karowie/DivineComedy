@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	float horizontalMove = 0f;
 	bool jump = false;
-	//bool dash = false;
+    //bool dash = false;
 
     //bool dashAxis = false;
 
@@ -27,10 +27,10 @@ public class PlayerMovement : MonoBehaviour {
 			jump = true;
 		}
 
-		//if (Input.GetKeyDown(KeyCode.C))
-		//{
-		//	dash = true;
-		//}
+        //if (Input.GetKeyDown(KeyCode.C))
+        //{
+        //    dash = true;
+        //}
 
         //if (Input.GetAxisRaw("Dash") == 1 || Input.GetAxisRaw("Dash") == -1) //RT in Unity 2017 = -1, RT in Unity 2019 = 1
         //{
@@ -60,10 +60,10 @@ public class PlayerMovement : MonoBehaviour {
 
 	void FixedUpdate ()
 	{
-		// Move our character
-		//controller.Move(horizontalMove * Time.fixedDeltaTime, jump, dash);
-		controller.Move(horizontalMove * Time.fixedDeltaTime, jump);
-		jump = false;
-		//dash = false;
-	}
+        // Move our character
+        //controller.Move(horizontalMove * Time.fixedDeltaTime, jump, dash);
+        controller.Move(horizontalMove * Time.fixedDeltaTime, jump);
+        jump = false;
+        //dash = false;
+    }
 }

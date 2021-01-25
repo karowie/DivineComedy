@@ -12,6 +12,8 @@ TagManager:
   - HeartFXM4
   - Food
   - Doors
+  - Coin
+  - DoorsLevel
   layers:
   - Default
   - TransparentFX

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TheSpawner : MonoBehaviour
+public class TheCoinsSpawner : MonoBehaviour
 {
     public GameObject fallingCoinPrefab;
     //public Camera cameraStarting;
@@ -12,7 +12,7 @@ public class TheSpawner : MonoBehaviour
     public float secondBetweenSpawns = 1f;
     float nextSpawnTime;
     //Vector2 screenHalfSizeWorldUnits;
-    public Vector2 spawnSizeMinMax;
+    public Vector2 spawnSizeMinMax = new Vector2(0.1f,1);
     void Start()
     {
         //screenHalfSizeWorldUnits = new Vector2(cameraMain.aspect * cameraMain.orthographicSize, cameraMain.orthographicSize);

@@ -20,6 +20,24 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Hell-Level3.unity
     guid: 96b03f07d18b9554db789bbedfa7bfed
+  - enabled: 1
+    path: Assets/Scenes/Hell-Level4.unity
+    guid: 3934df5c01c33954dabb60bb0dfba332
+  - enabled: 1
+    path: Assets/Scenes/Hell-Level5.unity
+    guid: 781d0aa48cb762343b87a0db552291b2
+  - enabled: 1
+    path: Assets/Scenes/Hell-Level6.unity
+    guid: 9eaf4de79b907704d94aff9620f8a805
+  - enabled: 1
+    path: Assets/Scenes/Hell-Level7.unity
+    guid: e83b0c5cb502db44c982948654f9a6ab
+  - enabled: 1
+    path: Assets/Scenes/Hell-Level8.unity
+    guid: b092dbc349466f642ad0af73901d8fb0
+  - enabled: 1
+    path: Assets/Scenes/Hell-Level9.unity
+    guid: 989de1b69193e7f40a261c1796f55723
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
