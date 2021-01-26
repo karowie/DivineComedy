@@ -6,14 +6,13 @@ TagManager:
   tags:
   - Enemy
   - Collectable
-  - HeartFMX5
-  - HeartFXM12
-  - HeartFXM21
-  - HeartFXM4
   - Food
   - Doors
   - Coin
   - DoorsLevel
+  - WoodenPill
+  - Box
+  - Key
   layers:
   - Default
   - TransparentFX

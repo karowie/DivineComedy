@@ -61,7 +61,8 @@ public class CharacterController2D : MonoBehaviour
 		items = new List<string>();
     }
 
-	private void OnTriggerEnter2D(Collider2D collision)
+
+    private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (collision.CompareTag("Collectable"))
 		{
@@ -114,8 +115,16 @@ public class CharacterController2D : MonoBehaviour
 			{
 				SceneManager.LoadScene(8);
 			}
+			else if (currentScene.name == "Hell-Level9")
+            {
+				if (howManyItems(items, "Box") == 16)
+                {
+					SceneManager.LoadScene(1);
+				}
+
+			}
 		}
-		if (collision.CompareTag("Coin"))
+		else if (collision.CompareTag("Coin"))
 		{
 			//collision.gameObject.GetComponent<AudioSource>().Play();
 			collision.gameObject.SetActive(false);
@@ -144,7 +153,36 @@ public class CharacterController2D : MonoBehaviour
 			}
 
 		}
+		else if (collision.CompareTag("WoodenPill")||collision.CompareTag("Box"))
+		{
+			collision.gameObject.SetActive(false);
+			Destroy(collision.gameObject);
+			items.Add(collision.gameObject.tag);
+
+			if (howManyItems(items,"WoodenPill") == 11)
+            {
+				SceneManager.LoadScene(10);
+			}	
+		}
+		else if (collision.CompareTag("Key"))
+        {
+			SceneManager.LoadScene(10);
+		}
 	}
+
+	private int howManyItems(List<string> list, string name)
+    {
+		int number = 0;
+		foreach(string item in list)
+		{
+			if (item==name)
+            {
+				number++;
+            }        
+		}
+		return number;
+    }
+
 
 	//the end of my code
 
@@ -440,5 +478,7 @@ public class CharacterController2D : MonoBehaviour
 		yield return new WaitForSeconds(1.1f);
 		SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
 	}
+
+
 
 }
