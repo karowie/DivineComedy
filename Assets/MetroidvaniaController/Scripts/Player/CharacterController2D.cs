@@ -20,7 +20,7 @@ public class CharacterController2D : MonoBehaviour
 	private Rigidbody2D m_Rigidbody2D;
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 velocity = Vector3.zero;
-	private float limitFallSpeed = 25f; // Limit fall speed
+	private readonly float limitFallSpeed = 25f; // Limit fall speed
 
 	public bool canDoubleJump = true; //If player can double jump
 	//[SerializeField] private float m_DashForce = 25f;
@@ -117,7 +117,7 @@ public class CharacterController2D : MonoBehaviour
 			}
 			else if (currentScene.name == "Hell-Level9")
             {
-				if (howManyItems(items, "Box") == 16)
+				if (HowManyItems(items, "Box") == 16)
                 {
 					SceneManager.LoadScene(1);
 				}
@@ -142,14 +142,34 @@ public class CharacterController2D : MonoBehaviour
         {
 			animator = GetComponent<Animator>();
 
-			if (collision.name.EndsWith("1"))
+			if (collision.name.EndsWith("_1")|| collision.name.EndsWith("_10")|| collision.name.EndsWith("_11")) //B
             {
-				this.transform.position = new Vector3(this.transform.position.x+20, this.transform.position.y+10, this.transform.position.z);
+				this.transform.position = new Vector3(-5.11f, -2.8f, this.transform.position.z);
 
 			}
-			else if (collision.name.EndsWith("2"))
+			else if (collision.name.EndsWith("_2")||collision.name.EndsWith("_l6")|| collision.name.EndsWith("_14")) //C
 			{
-				print("drzwi 2");
+				this.transform.position = new Vector3(-6.93f, 2.98f, this.transform.position.z);
+			}
+			else if (collision.name.EndsWith("_3")) //F
+			{
+				this.transform.position = new Vector3(70.12f, -2.71f, this.transform.position.z);
+			}
+			else if (collision.name.EndsWith("_5")|| collision.name.EndsWith("_7")||collision.name.EndsWith("_9")||collision.name.EndsWith("_15")) //A
+			{
+				this.transform.position = new Vector3(-45.11f, -2.71f, this.transform.position.z);
+			}
+			else if (collision.name.EndsWith("_8")||collision.name.EndsWith("_13")) //E
+			{
+				this.transform.position = new Vector3(-37.83f, 24.28f, this.transform.position.z);
+			}
+			else if (collision.name.EndsWith("_12") || collision.name.EndsWith("_16")) //D
+			{
+				this.transform.position = new Vector3(-42.08f, 19.95f, this.transform.position.z); 
+			}
+			else if (collision.name.EndsWith("4") ) //WINNING
+			{
+				SceneManager.LoadScene(10);
 			}
 
 		}
@@ -159,7 +179,7 @@ public class CharacterController2D : MonoBehaviour
 			Destroy(collision.gameObject);
 			items.Add(collision.gameObject.tag);
 
-			if (howManyItems(items,"WoodenPill") == 11)
+			if (HowManyItems(items,"WoodenPill") == 11)
             {
 				SceneManager.LoadScene(10);
 			}	
@@ -170,7 +190,7 @@ public class CharacterController2D : MonoBehaviour
 		}
 	}
 
-	private int howManyItems(List<string> list, string name)
+	private int HowManyItems(List<string> list, string name)
     {
 		int number = 0;
 		foreach(string item in list)
