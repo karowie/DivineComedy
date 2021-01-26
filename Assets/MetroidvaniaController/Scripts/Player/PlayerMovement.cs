@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour {
 
@@ -26,7 +27,11 @@ public class PlayerMovement : MonoBehaviour {
 		{
 			jump = true;
 		}
-
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            Cursor.visible = true;
+            SceneManager.LoadScene(1);
+        }
         //if (Input.GetKeyDown(KeyCode.C))
         //{
         //    dash = true;

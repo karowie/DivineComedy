@@ -78,7 +78,7 @@ public class CharacterController2D : MonoBehaviour
 			collision.gameObject.SetActive(false);
 			Destroy(collision.gameObject);
 
-			if (items.Count == 5)
+			if (items.Count == 7)
 				SceneManager.LoadScene(4);
 		}
 		else if (collision.CompareTag("Food"))
