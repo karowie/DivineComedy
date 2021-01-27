@@ -13,6 +13,11 @@ TagManager:
   - WoodenPill
   - Box
   - Key
+  - BadSign
+  - GoodSign
+  - magicKey
+  - magicWall
+  - Windman
   layers:
   - Default
   - TransparentFX
