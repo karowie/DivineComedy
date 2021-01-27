@@ -8,7 +8,7 @@ public class TheEnemySpawner : MonoBehaviour
     public GameObject EnemyPrefab;
     public GameObject character;
     public float secondBetweenSpawns = 10f;
-    public float gameTime = 20f;
+    public float gameTime = 120f;
     float nextSpawnTime;
     Vector2 spawnPosition = new Vector2(0, 0);
     int enemyCounter;
@@ -35,7 +35,9 @@ public class TheEnemySpawner : MonoBehaviour
 
         currentNumber = parentObj.transform.childCount;
 
-        if ((enemyCounter-currentNumber>10) && (Time.time>gameTime))
+        //if ((enemyCounter-currentNumber>1) && (Time.time>gameTime))
+        //if(Time.time > gameTime)
+        if ((enemyCounter - currentNumber > 5) && (Time.time > gameTime))
         {
             SceneManager.LoadScene(9);
         }
