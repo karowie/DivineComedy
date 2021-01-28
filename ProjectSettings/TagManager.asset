@@ -18,6 +18,7 @@ TagManager:
   - magicKey
   - magicWall
   - Windman
+  - MenuMusic
   layers:
   - Default
   - TransparentFX

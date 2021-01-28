@@ -13,7 +13,7 @@ public class magicKey : MonoBehaviour
     public Renderer rend;
     public Text dialog;
     private Transform chtp;
-    //public GameObject key;
+    //private Animator animator;
     void Start()
     {
         chtp = character.transform;
@@ -26,6 +26,8 @@ public class magicKey : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //animator = collision.GetComponent<Animator>();
+
         if (collision.CompareTag("magicKey"))
         {
             if(collision.name.EndsWith("_red"))
@@ -41,15 +43,16 @@ public class magicKey : MonoBehaviour
         {
             if(collision.name.EndsWith("_red")&&(rend.material.color == Color.red))
             {
-                rend.material.color = Color.grey;
+
+                //animator.SetTrigger("Open");
                 collision.gameObject.SetActive(false);
                 Destroy(collision.gameObject);
                 StartCoroutine(dogText(dog1));
 
+
             }
             else if (collision.name.EndsWith("_blue") && (rend.material.color == Color.blue))
             {
-                rend.material.color = Color.grey;
                 collision.gameObject.SetActive(false);
                 Destroy(collision.gameObject);
                 StartCoroutine(dogText(dog2));
@@ -57,7 +60,6 @@ public class magicKey : MonoBehaviour
             }
             else if (collision.name.EndsWith("_green") && (rend.material.color == Color.green))
             {
-                rend.material.color = Color.grey;
                 collision.gameObject.SetActive(false);
                 Destroy(collision.gameObject);
                 StartCoroutine(dogText(dog3));
@@ -65,27 +67,20 @@ public class magicKey : MonoBehaviour
             }
             else if (collision.name.EndsWith("_yellow") && (rend.material.color == Color.yellow))
             {
-                rend.material.color = Color.grey;
                 collision.gameObject.SetActive(false);
                 Destroy(collision.gameObject);
                 StartCoroutine(dogText(dog4));
-
             }
         }
     }
 
     IEnumerator dogText(GameObject dog)
     {
+        rend.material.color = Color.grey;
         dialog.text = "I am free!\nThank you!";
         yield return new WaitForSecondsRealtime(2);
         dialog.text = "";
         dog.gameObject.SetActive(false);
         Destroy(dog.gameObject);
     }
-
-
-
-
-
-
 }
