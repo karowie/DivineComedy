@@ -19,6 +19,7 @@ TagManager:
   - magicWall
   - Windman
   - MenuMusic
+  - Sign
   layers:
   - Default
   - TransparentFX

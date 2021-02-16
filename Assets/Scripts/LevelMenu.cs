@@ -1,10 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelMenu : MonoBehaviour
 {
+    public void goBackToMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
     public void HCircle1()
     {
         SceneManager.LoadScene(2);

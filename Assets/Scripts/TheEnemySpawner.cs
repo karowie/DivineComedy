@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class TheEnemySpawner : MonoBehaviour
 {
+    public GameObject endingCanvas;
     public GameObject EnemyPrefab;
     public GameObject character;
     public float secondBetweenSpawns = 10f;
@@ -39,7 +40,10 @@ public class TheEnemySpawner : MonoBehaviour
         //if(Time.time > gameTime)
         if ((enemyCounter - currentNumber > 5) && (Time.time > gameTime))
         {
-            SceneManager.LoadScene(9);
+            endingCanvas.SetActive(true);
+            character.SetActive(false);
+            Cursor.visible = true;
+            //SceneManager.LoadScene(9);
         }
 
     }

@@ -3,10 +3,12 @@ using UnityEngine.Events;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class CharacterController2D : MonoBehaviour
 {
-	//public GameObject character;
+	public GameObject character;
+	public GameObject endingCanvas;
 
 	[SerializeField] private float m_JumpForce = 400f;							// Amount of force added when the player jumps.
 	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;	// How much to smooth out the movement
@@ -79,7 +81,13 @@ public class CharacterController2D : MonoBehaviour
 			Destroy(collision.gameObject);
 
 			if (items.Count == 7)
-				SceneManager.LoadScene(4);
+            {
+				endingCanvas.SetActive(true);
+				character.SetActive(false);
+				Cursor.visible = true;
+				//SceneManager.LoadScene(4);
+			}
+				
 		}
 		else if (collision.CompareTag("Food"))
 		{
@@ -90,6 +98,9 @@ public class CharacterController2D : MonoBehaviour
 				collision.gameObject.SetActive(false);
 				Destroy(collision.gameObject);
 				items.Add("Food");
+				if (!m_FacingRight)
+					Flip();
+					
 				transform.localScale = new Vector2(Vector2.one.x + 0.5f * items.Count, Vector2.one.y + 0.5f * items.Count);
 
 			}
@@ -101,34 +112,48 @@ public class CharacterController2D : MonoBehaviour
 
 			if (currentScene.name == "Hell-Level1")
 			{
-				SceneManager.LoadScene(3);
+				endingCanvas.SetActive(true);
+				character.SetActive(false);
+				Cursor.visible = true;
+				//SceneManager.LoadScene(3);
 			}
 			else if ((items.Count < 2) && (currentScene.name == "Hell-Level3"))
 			{
-				SceneManager.LoadScene(5);
+				endingCanvas.SetActive(true);
+				character.SetActive(false);
+				Cursor.visible = true;
+				//SceneManager.LoadScene(5);
 			}
 			else if (currentScene.name == "Hell-Level4")
 			{
-				SceneManager.LoadScene(6);
+				endingCanvas.SetActive(true);
+				character.SetActive(false);
+				Cursor.visible = true;
+				//SceneManager.LoadScene(6);
 			}
 			else if (currentScene.name == "Hell-Level6")
 			{
-				SceneManager.LoadScene(8);
+				endingCanvas.SetActive(true);
+				character.SetActive(false);
+				Cursor.visible = true;
+				//SceneManager.LoadScene(8);
 			}
 			else if (currentScene.name == "Hell-Level9")
             {
 				if (HowManyItems(items, "Box") == 16)
                 {
-					SceneManager.LoadScene(1);
+					endingCanvas.SetActive(true);
+					character.SetActive(false);
+					Cursor.visible = true;
+					
+					//SceneManager.LoadScene(1);
 				}
 
 			}
 		}
 		else if (collision.CompareTag("Coin"))
 		{
-			//collision.gameObject.GetComponent<AudioSource>().Play();
-			collision.gameObject.SetActive(false);
-			Destroy(collision.gameObject);
+			StartCoroutine(waitAndDestroy(collision));
 			items.Add("Coin");
 
 			if (items.Count > 3)
@@ -169,7 +194,10 @@ public class CharacterController2D : MonoBehaviour
 			}
 			else if (collision.name.EndsWith("4") ) //WINNING
 			{
-				SceneManager.LoadScene(10);
+				endingCanvas.SetActive(true);
+				character.SetActive(false);
+				Cursor.visible = true;
+				//SceneManager.LoadScene(10);
 			}
 
 		}
@@ -202,6 +230,15 @@ public class CharacterController2D : MonoBehaviour
 		}
 		return number;
     }
+
+	IEnumerator waitAndDestroy(Collider2D collision)
+	{
+		collision.gameObject.GetComponent<AudioSource>().Play(); 
+		yield return new WaitForSecondsRealtime(0.15f);
+		collision.gameObject.SetActive(false);
+		Destroy(collision.gameObject);
+		
+	}
 
 
 	//the end of my code
@@ -291,19 +328,19 @@ public class CharacterController2D : MonoBehaviour
 	public void Move(float move, bool jump)
 	{
 		//if (canMove) {
-            //if (dash && canDash && !isWallSliding)
-            //{
-            //	//m_Rigidbody2D.AddForce(new Vector2(transform.localScale.x * m_DashForce, 0f));
-            //	StartCoroutine(DashCooldown());
-            //}
-            // If crouching, check to see if the character can stand up
-            //if (isDashing)
-            //{
-            //	m_Rigidbody2D.velocity = new Vector2(transform.localScale.x * m_DashForce, 0);
-            //}
-            //only control the player if grounded or airControl is turned on
-            //else if (m_Grounded || m_AirControl)
-            if (m_Grounded || m_AirControl)
+		//if (dash && canDash && !isWallSliding)
+		//{
+		//	//m_Rigidbody2D.AddForce(new Vector2(transform.localScale.x * m_DashForce, 0f));
+		//	StartCoroutine(DashCooldown());
+		//}
+		// If crouching, check to see if the character can stand up
+		//if (isDashing)
+		//{
+		//	m_Rigidbody2D.velocity = new Vector2(transform.localScale.x * m_DashForce, 0);
+		//}
+		//only control the player if grounded or airControl is turned on
+		//else if (m_Grounded || m_AirControl)
+		if (m_Grounded || m_AirControl)
             {
                 if (m_Rigidbody2D.velocity.y < -limitFallSpeed)
                     m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, -limitFallSpeed);

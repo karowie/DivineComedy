@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class magicKey : MonoBehaviour
 {
+    public GameObject endingCanvas;
     public GameObject character;
     public GameObject dog1;
     public GameObject dog2;
@@ -13,15 +15,24 @@ public class magicKey : MonoBehaviour
     public Renderer rend;
     public Text dialog;
     private Transform chtp;
+    private int counter;
     //private Animator animator;
     void Start()
     {
         chtp = character.transform;
         rend.material.color = Color.grey;
+        counter = 0;
     }
     void Update()
     {
         this.transform.position = new Vector3(chtp.position.x, chtp.position.y + 1.33f, chtp.position.z);
+        if(counter==4)
+        {
+            endingCanvas.SetActive(true);
+            character.SetActive(false);
+            Cursor.visible = true;
+            //SceneManager.LoadScene(7);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -82,5 +93,6 @@ public class magicKey : MonoBehaviour
         dialog.text = "";
         dog.gameObject.SetActive(false);
         Destroy(dog.gameObject);
+        counter++;
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8672250691171710351}
   - component: {fileID: 5264661319075709660}
   - component: {fileID: -1793666997603426557}
-  - component: {fileID: -3471778663877408323}
+  - component: {fileID: 1968542867148889933}
   m_Layer: 0
   m_Name: coin
   m_TagString: Coin
@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cc9537f224cac74aa1a229be6bd1329, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!82 &-3471778663877408323
+--- !u!82 &1968542867148889933
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

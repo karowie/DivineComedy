@@ -7,6 +7,7 @@ public class PlaySound : MonoBehaviour
     public AudioSource playSound;
     void OnTriggerEnter2D(Collider2D other)
     {
-        playSound.Play();
+        if(playSound!=null)
+            playSound.Play();
     }
 }

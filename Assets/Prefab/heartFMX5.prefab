@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2805198889820501125}
   - component: {fileID: 2805198889820501124}
   - component: {fileID: 366373223195765297}
-  - component: {fileID: 3333764613689283305}
+  - component: {fileID: 4103664872505642159}
   m_Layer: 0
   m_Name: heartFMX5
   m_TagString: Collectable
@@ -97,8 +97,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: heartFMX5
---- !u!58 &3333764613689283305
-CircleCollider2D:
+--- !u!68 &4103664872505642159
+EdgeCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -110,6 +110,28 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.043952167, y: 0.52755}
-  serializedVersion: 2
-  m_Radius: 3.5164022
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -0.04415849, y: -3.0480685}
+  - {x: 0.435996, y: -2.705984}
+  - {x: 2.527385, y: -1.2159799}
+  - {x: 3.8992267, y: 0.52288926}
+  - {x: 3.5885956, y: 2.253893}
+  - {x: 2.6172974, y: 2.8465993}
+  - {x: 2.3024132, y: 3.100447}
+  - {x: 0.9248686, y: 2.855285}
+  - {x: 0.33288473, y: 2.329855}
+  - {x: 0.04399768, y: 1.9254348}
+  - {x: -0.6003429, y: 2.7090995}
+  - {x: -1.9072773, y: 3.0408888}
+  - {x: -3.0398421, y: 2.6945257}
+  - {x: -3.7224822, y: 1.7876236}
+  - {x: -3.8443236, y: 0.89994705}
+  - {x: -3.600698, y: 0.51244056}
+  - {x: -2.9569678, y: -0.75793004}
+  - {x: -0.04373215, y: -3.0773768}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0

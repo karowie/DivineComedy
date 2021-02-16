@@ -7,8 +7,8 @@ public class Coins : MonoBehaviour
     public static Coins instance;
     public CoinsItems[] itemsToPool;
     private List<GameObject> pooledObjects;
+    //public AudioSource playSound;
 
-    // Start is called before the first frame update
     void Awake()
     {
 
@@ -53,7 +53,13 @@ public class Coins : MonoBehaviour
 
         return null;
     }
+    //private void OnTriggerEnter2D(Collider2D other)
+    //{
+    //    playSound.Play();
+    //}
 }
+
+
 
 [System.Serializable]
 public class CoinsItems
